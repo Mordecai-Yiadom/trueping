@@ -1,0 +1,19 @@
+main: me.krousant.trueping.plugin.TruePingPlugin
+name: TruePing
+version: '1.0'
+description: Allows players to see their own ping as well as others
+load: POSTWORLD
+api-version: '1.16.5'
+author: Krousant
+website: https://www.youtube.com/channel/UCUoLq_ba_y2TqOT3qJ__AGA/channels
+prefix: TruePing
+commands:
+  ping:
+    description: Allows sender to see ping of specific player or own ping if the sender is a player.
+    aliases:
+      - ping
+    usage: /<command> <player>
+
+
+
+

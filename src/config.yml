@@ -1,0 +1,5 @@
+#Ping update interval is in seconds and must be a whole number
+ping-update-interval: 5
+player-list-color: GREEN
+show-player-list-ping: true
+send-console-update-messages: false
