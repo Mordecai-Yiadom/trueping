@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TruePing">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/TruePing.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

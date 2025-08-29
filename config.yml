@@ -2,4 +2,5 @@
 ping-update-interval: 5
 player-list-color: GREEN
 show-player-list-ping: true
+player-list-position-style: postfix
 send-console-update-messages: false

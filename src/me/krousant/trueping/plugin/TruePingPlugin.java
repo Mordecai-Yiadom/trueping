@@ -22,6 +22,7 @@ public class TruePingPlugin extends JavaPlugin
     //Measured in seconds
     private static int pingUpdateInterval;
     private static boolean sendConsoleUpdates, showPlayerListPing;
+    private static PingConfig.PositionStyle positionStyle;
 
     @Override
     public void onEnable()
@@ -34,6 +35,7 @@ public class TruePingPlugin extends JavaPlugin
         pingUpdateInterval = PingConfig.getPingUpdateInterval();
         sendConsoleUpdates = PingConfig.getSendConsoleUpdateMessages();
         showPlayerListPing = PingConfig.getShowPlayerListPing();
+        positionStyle = PingConfig.getPositionStyle();
 
         if(showPlayerListPing)
         {
@@ -42,12 +44,10 @@ public class TruePingPlugin extends JavaPlugin
                 Collection<Player> onlinePlayers = (Collection<Player>) Bukkit.getOnlinePlayers();
                 int numPlayersUpdate = 0;
 
-                if (onlinePlayers.size() > 0) {
-                    for (Player player : onlinePlayers) {
-                        String prefix = String.format(playerListColor + "[%dms] ", player.getPing());
-                        String playerName = String.format(ChatColor.WHITE + player.getName());
-                        player.setPlayerListName(prefix + playerName);
-
+                if (!onlinePlayers.isEmpty()) {
+                    for (Player player : onlinePlayers)
+                    {
+                        updatePing(player);
                         numPlayersUpdate++;
                     }
                 }
@@ -62,8 +62,11 @@ public class TruePingPlugin extends JavaPlugin
         }
 
         //Register Event Handler(s)
-        PlayerJoinEvent.getHandlerList().register(new RegisteredListener(new PlayerJoinEventExecutor(), new PlayerJoinEventExecutor(), EventPriority.NORMAL, this, true));
-        PlayerQuitEvent.getHandlerList().register(new RegisteredListener(new PlayerQuitEventExecutor(), new PlayerQuitEventExecutor(), EventPriority.NORMAL, this, true));
+        PlayerJoinEvent.getHandlerList().register(new RegisteredListener(new PlayerJoinEventExecutor(),
+                new PlayerJoinEventExecutor(), EventPriority.NORMAL, this, true));
+
+        PlayerQuitEvent.getHandlerList().register(new RegisteredListener(new PlayerQuitEventExecutor(),
+                new PlayerQuitEventExecutor(), EventPriority.NORMAL, this, true));
     }
 
     @Override
@@ -102,9 +105,23 @@ public class TruePingPlugin extends JavaPlugin
     {
         if(showPlayerListPing)
         {
-            String prefix = String.format(playerListColor + "[%dms] ", player.getPing());
-            String playerName = String.format(ChatColor.WHITE + player.getName());
-            player.setPlayerListName(prefix + playerName);
+            String playerName;
+
+            switch(positionStyle)
+            {
+                case PREFIX:
+                    String prefix = String.format(playerListColor + "[%dms] ", player.getPing());
+                    playerName = String.format(ChatColor.RESET + player.getName());
+                    player.setPlayerListName(prefix + playerName);
+                    break;
+
+                case POSTFIX:
+                    String postfix = String.format(playerListColor + " [%dms]", player.getPing());
+                    playerName = player.getName();
+                    player.setPlayerListName(playerName + postfix);
+                    break;
+            }
+
         }
     }
 }

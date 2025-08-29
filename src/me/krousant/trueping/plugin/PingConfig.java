@@ -54,4 +54,30 @@ public class PingConfig
     {
         return config.getInt("ping-update-interval");
     }
+
+    protected static PositionStyle getPositionStyle()
+    {
+        String configOption = config.getString("player-list-position-style");
+        if(configOption == null) return PositionStyle.POSTFIX;
+
+        for(PositionStyle style : PositionStyle.values())
+            if(style.alias.equalsIgnoreCase(configOption)) return style;
+
+       return PositionStyle.POSTFIX;
+    }
+
+    public enum PositionStyle
+    {
+        PREFIX("prefix"),
+        POSTFIX("postfix");
+
+        private String alias;
+
+        PositionStyle(String alias)
+        {
+            this.alias = alias;
+        }
+
+        public String getAlias(){return this.alias;}
+    }
 }
