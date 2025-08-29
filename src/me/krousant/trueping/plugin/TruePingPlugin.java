@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.*;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class TruePingPlugin extends JavaPlugin
@@ -23,6 +25,7 @@ public class TruePingPlugin extends JavaPlugin
     private static int pingUpdateInterval;
     private static boolean sendConsoleUpdates, showPlayerListPing;
     private static PingConfig.PositionStyle positionStyle;
+
 
     @Override
     public void onEnable()
@@ -105,20 +108,16 @@ public class TruePingPlugin extends JavaPlugin
     {
         if(showPlayerListPing)
         {
-            String playerName;
-
             switch(positionStyle)
             {
                 case PREFIX:
                     String prefix = String.format(playerListColor + "[%dms] ", player.getPing());
-                    playerName = String.format(ChatColor.RESET + player.getName());
-                    player.setPlayerListName(prefix + playerName);
+                    player.setPlayerListName(prefix + player.getDisplayName());
                     break;
 
                 case POSTFIX:
                     String postfix = String.format(playerListColor + " [%dms]", player.getPing());
-                    playerName = player.getName();
-                    player.setPlayerListName(playerName + postfix);
+                    player.setPlayerListName(player.getDisplayName() + postfix);
                     break;
             }
 
